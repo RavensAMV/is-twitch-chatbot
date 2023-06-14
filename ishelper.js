@@ -1,6 +1,11 @@
 require("dotenv").config();
 const tmi = require("tmi.js");
 
+const express = require("express");
+const app = express();
+app.listen(3000, () => console.log("Server is up and running..."));
+app.get("/", (req, res) => res.sendStatus(200));
+
 const countdown = require("./utils/countdown");
 const { randomizerList, chooseRandom } = require("./utils/randomize");
 
@@ -45,7 +50,7 @@ const connection = (channel) => {
     ) {
       randomizerList.clear();
       send(
-        `@${tags["display-name"]}, Список участников рандомайзера очищен FBtouchdown`
+        `@${tags["display-name"]}, Список участников рандомайзера очищен  FBtouchdown`
       );
       console.log("Список участников рандомайзера очищен...");
     }
