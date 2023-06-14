@@ -11,7 +11,7 @@ const { randomizerList, chooseRandom } = require("./utils/randomize");
 
 const connection = (channel) => {
   const client = new tmi.Client({
-    options: { debug: true },
+    options: { debug: false },
     connection: {
       reconnect: true,
       secure: true,
@@ -32,7 +32,7 @@ const connection = (channel) => {
   /////////////////////////////////////
   // Периодические события
   client.on("connected", () => {
-      setInterval(() => send('@chieeeeefkeef, Где бабки?'), 1800000);
+    setInterval(() => send('@chieeeeefkeef, Где бабки?'), 1800000);
   })
   /////////////////////////////////////
 
@@ -46,9 +46,9 @@ const connection = (channel) => {
     // !результат #private
     // !количество #private
 
-    if (messageFixed.toLowerCase() === "!игра") {
+    if (messageFixed.toLowerCase() === "!игра" && !randomizerList.has(tags["display-name"])) {
       randomizerList.add(tags["display-name"]);
-      console.log(randomizerList);
+      console.log('Добавлен участник:', tags["display-name"]);
     }
 
     if (
@@ -58,7 +58,7 @@ const connection = (channel) => {
     ) {
       randomizerList.clear();
       send(
-        `@${tags["display-name"]}, Начат новый сбор участников. Напишите "!игра", чтобы испытать судьбу PixelBob`
+        `@${tags["display-name"]}, Начат новый сбор участников. Напишите !игра, чтобы испытать судьбу PixelBob`
       );
       console.log('Список очищен... Начат новый сбор участников.');
     }
