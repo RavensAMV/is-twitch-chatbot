@@ -45,7 +45,7 @@ const connection = (channel) => {
     }
 
     if (
-      messageFixed.toLowerCase() === "!заново" &&
+      messageFixed.toLowerCase() === "!старт" &&
       (tags["username"] === channel.replace("#", "") ||
         tags["username"] === "geniusooo")
     ) {
@@ -57,7 +57,7 @@ const connection = (channel) => {
     }
 
     if (
-      messageFixed.toLowerCase() === "!выбор" &&
+      messageFixed.toLowerCase() === "!результат" &&
       (tags["username"] === channel.replace("#", "") ||
         tags["username"] === "geniusooo")
     ) {
