@@ -45,7 +45,7 @@ const connection = (channel) => {
     ) {
       randomizerList.clear();
       send(
-        `@${tags["display-name"]}, Список участников рандомайзера очищен...`
+        `@${tags["display-name"]}, Список участников рандомайзера очищен FBtouchdown`
       );
       console.log("Список участников рандомайзера очищен...");
     }
@@ -60,11 +60,13 @@ const connection = (channel) => {
         randomizerList.clear();
         console.log("Победитель:", lucky);
         countdown(
-          `@${tags["display-name"]}, Победитель: @${lucky}!`,
+          `@${tags["display-name"]}, Победитель: @${lucky}! GlitchCat`,
           send
         );
       } else {
-        send(`@${tags["display-name"]}, Список участников пуст O_o`);
+        send(
+          `@${tags["display-name"]}, Список участников пуст PixelBob`
+        );
       }
     }
 
