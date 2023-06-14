@@ -24,10 +24,17 @@ const connection = (channel) => {
   });
 
   const send = (message) => {
-    client.action(channel, message);
+    client.say(channel, message);
   };
 
   client.connect();
+
+  /////////////////////////////////////
+  // Периодические события
+  client.on("connected", () => {
+      setInterval(() => send('@chieeeeefkeef, Где бабки?'), 1800000);
+  })
+  /////////////////////////////////////
 
   client.on("message", (channel, tags, message, self) => {
     const messageFixed = message.trim().toLowerCase();
@@ -35,8 +42,8 @@ const connection = (channel) => {
     //////////////////////////////////////////
     // РАНДОМАЙЗЕР: КОММАНДЫ
     // !игра
-    // !заново #private
-    // !выбор #private
+    // !старт #private
+    // !результат #private
     // !количество #private
 
     if (messageFixed.toLowerCase() === "!игра") {
