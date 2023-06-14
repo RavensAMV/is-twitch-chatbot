@@ -51,9 +51,9 @@ const connection = (channel) => {
     ) {
       randomizerList.clear();
       send(
-        `@${tags["display-name"]}, Список участников рандомайзера очищен  FBtouchdown`
+        `@${tags["display-name"]}, Список очищен... Начат новый сбор участников. Напишите !игра, чтобы испытать судьбу PixelBob`
       );
-      console.log("Список участников рандомайзера очищен...");
+      console.log('Список очищен... Начат новый сбор участников.');
     }
 
     if (
