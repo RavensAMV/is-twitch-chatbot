@@ -32,6 +32,7 @@ const connection = (channel) => {
   client.on("message", (channel, tags, message, self) => {
     const messageFixed = message.trim().toLowerCase();
 
+    //////////////////////////////////////////
     // РАНДОМАЙЗЕР: КОММАНДЫ
     // !игра
     // !заново #private
