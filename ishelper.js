@@ -63,7 +63,6 @@ const connection = (channel) => {
     ) {
       if (randomizerList.size > 0) {
         const lucky = chooseRandom(randomizerList);
-        randomizerList.clear();
         console.log("Победитель:", lucky);
         countdown(
           `@${tags["display-name"]}, Победитель: @${lucky}! GlitchCat`,
