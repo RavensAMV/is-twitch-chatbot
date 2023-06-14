@@ -32,6 +32,8 @@ const connection = (channel) => {
   client.on("message", (channel, tags, message, self) => {
     const messageFixed = message.trim().toLowerCase();
 
+    send("**test**")
+
     //////////////////////////////////////////
     // РАНДОМАЙЗЕР: КОММАНДЫ
     // !игра
@@ -51,7 +53,7 @@ const connection = (channel) => {
     ) {
       randomizerList.clear();
       send(
-        `@${tags["display-name"]}, Список очищен... Начат новый сбор участников. Напишите !игра, чтобы испытать судьбу PixelBob`
+        `@${tags["display-name"]}, Начат новый сбор участников. Напишите "!игра", чтобы испытать судьбу PixelBob`
       );
       console.log('Список очищен... Начат новый сбор участников.');
     }
