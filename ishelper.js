@@ -11,7 +11,7 @@ const { randomizerList, chooseRandom } = require("./utils/randomize");
 
 const connection = (channel) => {
   const client = new tmi.Client({
-    options: { debug: true },
+    options: { debug: false },
     connection: {
       reconnect: true,
       secure: true,
