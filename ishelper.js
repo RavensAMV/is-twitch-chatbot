@@ -55,13 +55,17 @@ const connection = (channel) => {
       (tags["username"] === channel.replace("#", "") ||
         tags["username"] === "geniusooo")
     ) {
-      const lucky = chooseRandom(randomizerList);
-      randomizerList.clear();
-      console.log("Победитель:", lucky);
-      countdown(
-        `@${tags["display-name"]}, Победитель: @${lucky}!`,
-        send
-      );
+      if (randomizerList.size > 0) {
+        const lucky = chooseRandom(randomizerList);
+        randomizerList.clear();
+        console.log("Победитель:", lucky);
+        countdown(
+          `@${tags["display-name"]}, Победитель: @${lucky}!`,
+          send
+        );
+      } else {
+        send(`@${tags["display-name"]}, Список участников пуст O_o`);
+      }
     }
 
     if (
