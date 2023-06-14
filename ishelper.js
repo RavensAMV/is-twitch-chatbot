@@ -11,7 +11,7 @@ const { randomizerList, chooseRandom } = require("./utils/randomize");
 
 const connection = (channel) => {
   const client = new tmi.Client({
-    options: { debug: false },
+    options: { debug: true },
     connection: {
       reconnect: true,
       secure: true,
@@ -32,9 +32,11 @@ const connection = (channel) => {
   /////////////////////////////////////
   // Периодические события
   client.on("connected", () => {
-    setInterval(() => send('@chieeeeefkeef, Где бабки?'), 1800000);
-  })
+    setInterval(() => send("@chieeeeefkeef, Где бабки?"), 1800000);
+  });
   /////////////////////////////////////
+
+  let previousWinner = "";
 
   client.on("message", (channel, tags, message, self) => {
     const messageFixed = message.trim().toLowerCase();
@@ -46,13 +48,16 @@ const connection = (channel) => {
     // !результат #private
     // !количество #private
 
-    if (messageFixed.toLowerCase() === "!игра" && !randomizerList.has(tags["display-name"])) {
+    if (
+      messageFixed === "!игра" &&
+      !randomizerList.has(tags["display-name"])
+    ) {
       randomizerList.add(tags["display-name"]);
-      console.log('Добавлен участник:', tags["display-name"]);
+      console.log("Добавлен участник:", tags["display-name"]);
     }
 
     if (
-      messageFixed.toLowerCase() === "!старт" &&
+      messageFixed === "!старт" &&
       (tags["username"] === channel.replace("#", "") ||
         tags["username"] === "geniusooo")
     ) {
@@ -60,16 +65,20 @@ const connection = (channel) => {
       send(
         `@${tags["display-name"]}, Начат новый сбор участников. Напишите !игра, чтобы испытать судьбу PixelBob`
       );
-      console.log('Список очищен... Начат новый сбор участников.');
+      console.log("Список очищен... Начат новый сбор участников.");
     }
 
     if (
-      messageFixed.toLowerCase() === "!результат" &&
+      messageFixed === "!результат" &&
       (tags["username"] === channel.replace("#", "") ||
         tags["username"] === "geniusooo")
     ) {
       if (randomizerList.size > 0) {
-        const lucky = chooseRandom(randomizerList);
+        let lucky = chooseRandom(randomizerList);
+        while (previousWinner === lucky) {
+          lucky = chooseRandom(randomizerList);
+        }
+        previousWinner = lucky;
         console.log("Победитель:", lucky);
         countdown(
           `@${tags["display-name"]}, Победитель: @${lucky}! GlitchCat`,
