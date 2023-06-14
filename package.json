@@ -1,0 +1,16 @@
+{
+  "name": "is-helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ishelper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ishelper.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.1.4",
+    "tmi.js": "^1.8.5"
+  }
+}
