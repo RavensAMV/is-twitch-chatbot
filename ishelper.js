@@ -32,7 +32,7 @@ const connection = (channel) => {
   /////////////////////////////////////
   // Периодические события
   client.on("connected", () => {
-    setInterval(() => send("@chieeeeefkeef, Где бабки?"), 1800000);
+    // setInterval(() => send("@chieeeeefkeef, Где бабки?"), 1800000);
   });
   /////////////////////////////////////
 
@@ -92,7 +92,7 @@ const connection = (channel) => {
     }
 
     if (
-      messageFixed.toLowerCase() === "!участники" &&
+      messageFixed === "!участники" &&
       (tags["username"] === channel.replace("#", "") ||
         tags["username"] === "geniusooo")
     ) {
