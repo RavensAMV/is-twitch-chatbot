@@ -18,8 +18,9 @@ const chooseRandom = (set, boostedChance = 0.2) => {
 
   if (boostedUsers.length > 0 && random <= boostedChance) {
     const randomIndex = chooseIndex(boostedUsers);
-    console.log("Сработал шанс приписки!");
-    console.log(`${boostedUsers}: участник №${randomIndex}.`);
+    console.log("---------------------Сработал шанс приписки!---------------------");
+    console.log(`${boostedUsers}: -- участник №${randomIndex}.`);
+    console.log("-----------------------------------------------------------------");
     return boostedUsers[randomIndex];
   }
 
