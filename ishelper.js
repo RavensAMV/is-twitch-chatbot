@@ -11,7 +11,7 @@ const { randomizerList, chooseRandom } = require("./utils/randomize");
 
 const connection = (channel) => {
   const client = new tmi.Client({
-    options: { debug: true },
+    options: { debug: false },
     connection: {
       reconnect: true,
       secure: true,
@@ -31,9 +31,9 @@ const connection = (channel) => {
 
   /////////////////////////////////////
   // Периодические события
-  client.on("connected", () => {
-    setInterval(() => send("@chieeeeefkeef, Где бабки?"), 1800000);
-  });
+  // client.on("connected", () => {
+  //   setInterval(() => send("@chieeeeefkeef, Где бабки?"), 1800000);
+  // });
   /////////////////////////////////////
 
   let previousWinner = "";
