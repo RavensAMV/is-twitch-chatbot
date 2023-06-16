@@ -11,7 +11,7 @@ const { randomizerList, chooseRandom } = require("./utils/randomize");
 
 const connection = (channel) => {
   const client = new tmi.Client({
-    options: { debug: false },
+    options: { debug: true },
     connection: {
       reconnect: true,
       secure: true,
@@ -32,13 +32,15 @@ const connection = (channel) => {
   /////////////////////////////////////
   // Периодические события
   client.on("connected", () => {
-    // setInterval(() => send("@chieeeeefkeef, Где бабки?"), 1800000);
+    setInterval(() => send("@chieeeeefkeef, Где бабки?"), 1800000);
   });
   /////////////////////////////////////
 
   let previousWinner = "";
+  const subscribers = new Set();
 
   client.on("message", (channel, tags, message, self) => {
+
     const messageFixed = message.trim().toLowerCase();
 
     //////////////////////////////////////////
@@ -54,6 +56,12 @@ const connection = (channel) => {
     ) {
       randomizerList.add(tags["display-name"]);
       console.log("Добавлен участник:", tags["display-name"]);
+      if (
+        tags["subscriber"] &&
+        !subscribers.has(tags["display-name"])
+      ) {
+        subscribers.add(tags["display-name"]);
+      }
     }
 
     if (
@@ -62,6 +70,7 @@ const connection = (channel) => {
         tags["username"] === "geniusooo")
     ) {
       randomizerList.clear();
+      subscribers.clear();
       send(
         `@${tags["display-name"]}, Начат новый сбор участников. Напишите !игра, чтобы испытать судьбу PixelBob`
       );
@@ -74,9 +83,9 @@ const connection = (channel) => {
         tags["username"] === "geniusooo")
     ) {
       if (randomizerList.size > 0) {
-        let lucky = chooseRandom(randomizerList);
+        let lucky = chooseRandom(randomizerList, subscribers);
         while (previousWinner === lucky) {
-          lucky = chooseRandom(randomizerList);
+          lucky = chooseRandom(randomizerList, subscribers);
         }
         previousWinner = lucky;
         console.log("Победитель:", lucky);
@@ -92,7 +101,7 @@ const connection = (channel) => {
     }
 
     if (
-      messageFixed === "!участники" &&
+      messageFixed.toLowerCase() === "!участники" &&
       (tags["username"] === channel.replace("#", "") ||
         tags["username"] === "geniusooo")
     ) {

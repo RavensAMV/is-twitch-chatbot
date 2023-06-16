@@ -1,30 +1,48 @@
 const randomizerList = new Set();
 
-const chooseRandom = (set, boostedChance = 0.2) => {
+const chooseRandom = (
+  mainSet,
+  subsSet,
+  boostedChanceIS = 0.1,
+  boostedChanceSubs = 0.2
+) => {
   const chooseIndex = (array) =>
     Math.floor(Math.random() * array.length);
 
   const boostedUsers = [];
-  const vip = ['hoolywood_', 'is_adilyator', 'ens_a_se', 'geniusooo', 'st1ch192', 'is_mainis_raev', 'nowraly'];
 
-  for (const user of set) {
-    if (user.startsWith("is_") || vip.includes(user.toLowerCase())) {
+  for (const user of mainSet) {
+    if (user.startsWith("is_")) {
       boostedUsers.push(user);
     }
   }
 
   const random = Math.random();
-  console.log(`Проверка юзеров с припиской: ${random} <= ${boostedChance}?`);
 
-  if (boostedUsers.length > 0 && random <= boostedChance) {
+  console.log(
+    `Проверка юзеров с подпиской: ${random} <= ${boostedChanceSubs}}?`
+  );
+
+  if (subsSet.size > 0 && random <= boostedChanceSubs) {
+    const subs = Array.from(mainSet);
+    const randomIndex = chooseIndex(subs);
+    console.log("Сработал шанс подписки!");
+    console.log(`${subs}: участник №${randomIndex}.`);
+    return subs[randomIndex];
+  }
+
+  console.log(
+    `Проверка юзеров с припиской: ${random} <= ${boostedChanceIS}}?`
+  );
+
+  if (boostedUsers.length > 0 && random <= boostedChanceIS) {
     const randomIndex = chooseIndex(boostedUsers);
-    console.log("---------------------Сработал шанс приписки!---------------------");
-    console.log(`${boostedUsers}: -- участник №${randomIndex}.`);
-    console.log("-----------------------------------------------------------------");
+    console.log("Сработал шанс приписки!");
+    console.log(`${boostedUsers}: участник №${randomIndex}.`);
     return boostedUsers[randomIndex];
   }
 
-  const usersArray = Array.from(set);
+  const usersArray = Array.from(mainSet);
   const randomIndex = chooseIndex(usersArray);
   console.log(
     usersArray,
