@@ -1,17 +1,17 @@
-require("dotenv").config();
-const tmi = require("tmi.js");
+import "dotenv/config";
+import tmi from "tmi.js";
 
-const express = require("express");
+import express from "express";
 const app = express();
 app.listen(3000, () => console.log("Server is up and running..."));
 app.get("/", (req, res) => res.sendStatus(200));
 
-const countdown = require("./utils/countdown");
-const { randomizerList, chooseRandom } = require("./utils/randomize");
+import countdown from "./utils/countdown.js";
+import chooseRandom from "./utils/randomize.js";
 
 const connection = (channel) => {
   const client = new tmi.Client({
-    options: { debug: false },
+    options: { debug: true },
     connection: {
       reconnect: true,
       secure: true,
@@ -37,10 +37,13 @@ const connection = (channel) => {
   /////////////////////////////////////
 
   let previousWinner = "";
-  const subscribers = new Set();
+  let randomizerList = {
+    GeniusOoO: { subscriber: true },
+    igorstankevich: { subscriber: false },
+  };
+  const ignoreUsers = ["is_RavensAMV"];
 
   client.on("message", (channel, tags, message, self) => {
-
     const messageFixed = message.trim().toLowerCase();
 
     //////////////////////////////////////////
@@ -52,16 +55,13 @@ const connection = (channel) => {
 
     if (
       messageFixed === "!игра" &&
-      !randomizerList.has(tags["display-name"])
+      !randomizerList[tags["display-name"]] &&
+      tags["display-name"] !== previousWinner
     ) {
-      randomizerList.add(tags["display-name"]);
+      randomizerList[tags["display-name"]] = {
+        subscriber: tags["subscriber"],
+      };
       console.log("Добавлен участник:", tags["display-name"]);
-      if (
-        tags["subscriber"] &&
-        !subscribers.has(tags["display-name"])
-      ) {
-        subscribers.add(tags["display-name"]);
-      }
     }
 
     if (
@@ -69,8 +69,7 @@ const connection = (channel) => {
       (tags["username"] === channel.replace("#", "") ||
         tags["username"] === "geniusooo")
     ) {
-      randomizerList.clear();
-      subscribers.clear();
+      randomizerList = {};
       send(
         `@${tags["display-name"]}, Начат новый сбор участников. Напишите !игра, чтобы испытать судьбу PixelBob`
       );
@@ -82,10 +81,13 @@ const connection = (channel) => {
       (tags["username"] === channel.replace("#", "") ||
         tags["username"] === "geniusooo")
     ) {
-      if (randomizerList.size > 0) {
-        let lucky = chooseRandom(randomizerList, subscribers);
-        while (previousWinner === lucky) {
-          lucky = chooseRandom(randomizerList, subscribers);
+      if (Object.keys(randomizerList).length > 0) {
+        let lucky = chooseRandom(randomizerList);
+        while (
+          previousWinner === lucky ||
+          ignoreUsers.includes(lucky)
+        ) {
+          lucky = chooseRandom(randomizerList);
         }
         previousWinner = lucky;
         console.log("Победитель:", lucky);

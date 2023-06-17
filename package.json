@@ -2,16 +2,18 @@
   "name": "is-helper",
   "version": "1.0.0",
   "description": "",
-  "main": "ishelper.js",
+  "main": "ishelper.ts",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ishelper.js"
+    "start": "node ishelper.js",
+    "dev": "nodemon ishelper.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
+    "nodemon": "^2.0.22",
     "tmi.js": "^1.8.5"
   }
 }

@@ -1,8 +1,5 @@
-const randomizerList = new Set();
-
 const chooseRandom = (
-  mainSet,
-  subsSet,
+  users,
   boostedChanceIS = 0.1,
   boostedChanceSubs = 0.2
 ) => {
@@ -10,27 +7,35 @@ const chooseRandom = (
     Math.floor(Math.random() * array.length);
 
   const boostedUsers = [];
+  const subscribers = [];
+  const allUsers = [];
 
-  for (const user of mainSet) {
+  for (const user of Object.keys(users)) {
     if (user.startsWith("is_")) {
       boostedUsers.push(user);
     }
+
+    if (users[user].subscriber) {
+      subscribers.push(user);
+    }
+
+    allUsers.push(user);
   }
 
-  const random = Math.random();
+  let random = Math.random();
 
   console.log(
     `Проверка юзеров с подпиской: ${random} <= ${boostedChanceSubs}}?`
   );
 
-  if (subsSet.size > 0 && random <= boostedChanceSubs) {
-    const subs = Array.from(mainSet);
-    const randomIndex = chooseIndex(subs);
+  if (subscribers.length > 0 && random <= boostedChanceSubs) {
+    const randomIndex = chooseIndex(subscribers);
     console.log("Сработал шанс подписки!");
-    console.log(`${subs}: участник №${randomIndex}.`);
-    return subs[randomIndex];
+    console.log(`${subscribers}: участник №${randomIndex}.`);
+    return subscribers[randomIndex];
   }
 
+  random = Math.random();
   console.log(
     `Проверка юзеров с припиской: ${random} <= ${boostedChanceIS}}?`
   );
@@ -42,14 +47,13 @@ const chooseRandom = (
     return boostedUsers[randomIndex];
   }
 
-  const usersArray = Array.from(mainSet);
-  const randomIndex = chooseIndex(usersArray);
+  const randomIndex = chooseIndex(allUsers);
   console.log(
-    usersArray,
+    allUsers,
     "Выбор из общего числа участников, рандомный номер:",
     randomIndex
   );
-  return usersArray[randomIndex];
+  return allUsers[randomIndex];
 };
 
-module.exports = { randomizerList, chooseRandom };
+export default chooseRandom;

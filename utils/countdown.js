@@ -9,4 +9,4 @@ const countdown = (message, send) => {
   }, 1000);
 };
 
-module.exports = countdown;
+export default countdown;
