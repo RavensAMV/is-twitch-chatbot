@@ -11,7 +11,7 @@ import chooseRandom from "./utils/randomize.js";
 
 const connection = (channel) => {
   const client = new tmi.Client({
-    options: { debug: true },
+    options: { debug: false },
     connection: {
       reconnect: true,
       secure: true,
@@ -37,13 +37,10 @@ const connection = (channel) => {
   /////////////////////////////////////
 
   let previousWinner = "";
-  let randomizerList = {
-    GeniusOoO: { subscriber: true },
-    igorstankevich: { subscriber: false },
-  };
-  const ignoreUsers = ["is_RavensAMV"];
+  let randomizerList = {};
+  const ignoreUsers = ["is_RavensAMV", "chieeeeefkeef"];
 
-  client.on("message", (channel, tags, message, self) => {
+  client.on("message", (channel, tags, message) => {
     const messageFixed = message.trim().toLowerCase();
 
     //////////////////////////////////////////
@@ -84,14 +81,15 @@ const connection = (channel) => {
       if (Object.keys(randomizerList).length > 0) {
         let lucky = chooseRandom(randomizerList);
         while (
-          previousWinner === lucky ||
-          ignoreUsers.includes(lucky)
+          Object.keys(randomizerList).length > ignoreUsers.length + 1 &&
+          (previousWinner === lucky ||
+            ignoreUsers.includes(lucky))
         ) {
           lucky = chooseRandom(randomizerList);
         }
         previousWinner = lucky;
         console.log("Победитель:", lucky);
-        countdown(
+        countdown(5,
           `@${tags["display-name"]}, Победитель: @${lucky}! GlitchCat`,
           send
         );
