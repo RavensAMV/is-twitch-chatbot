@@ -32,7 +32,12 @@ const chooseRandom = (
     const randomIndex = chooseIndex(subscribers);
     console.log("Сработал шанс подписки!");
     console.log(`${subscribers}: участник №${randomIndex}.`);
-    return subscribers[randomIndex];
+
+    if (subscribers[randomIndex].toLowerCase().startsWith('is_')) {
+      return {winner: subscribers[randomIndex], message: " - Сработал шанс подписки на приписке!"};
+    }
+    
+    return {winner: subscribers[randomIndex], message: " - Сработал шанс подписки!"};
   }
 
   random = Math.random();
@@ -44,7 +49,7 @@ const chooseRandom = (
     const randomIndex = chooseIndex(boostedUsers);
     console.log("Сработал шанс приписки!");
     console.log(`${boostedUsers}: участник №${randomIndex}.`);
-    return boostedUsers[randomIndex];
+    return {winner: boostedUsers[randomIndex], message: " - Сработал шанс приписки!"};
   }
 
   const randomIndex = chooseIndex(allUsers);
@@ -53,7 +58,7 @@ const chooseRandom = (
     "Выбор из общего числа участников, рандомный номер:",
     randomIndex
   );
-  return allUsers[randomIndex];
+  return {winner: allUsers[randomIndex], message: ' - '};
 };
 
 export default chooseRandom;

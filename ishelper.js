@@ -38,7 +38,7 @@ const connection = (channel) => {
 
   let previousWinner = "";
   let randomizerList = {};
-  const ignoreUsers = ["is_RavensAMV", "chieeeeefkeef"];
+  const ignoreUsers = ["chieeeeefkeef"];
 
   client.on("message", (channel, tags, message) => {
     const messageFixed = message.trim().toLowerCase();
@@ -82,15 +82,15 @@ const connection = (channel) => {
         let lucky = chooseRandom(randomizerList);
         while (
           Object.keys(randomizerList).length > ignoreUsers.length + 1 &&
-          (previousWinner === lucky ||
-            ignoreUsers.includes(lucky))
+          (previousWinner === lucky.winner ||
+            ignoreUsers.includes(lucky.winner))
         ) {
           lucky = chooseRandom(randomizerList);
         }
-        previousWinner = lucky;
-        console.log("Победитель:", lucky);
+        previousWinner = lucky.winner;
+        console.log("Победитель:", lucky.winner);
         countdown(5,
-          `@${tags["display-name"]}, Победитель: @${lucky}! GlitchCat`,
+          `@${tags["display-name"]}, Победитель: @${lucky.winner}${lucky.message} GlitchCat`,
           send
         );
       } else {
@@ -106,7 +106,7 @@ const connection = (channel) => {
         tags["username"] === "geniusooo")
     ) {
       send(
-        `@${tags["display-name"]}, Количество участников: ${randomizerList.size}`
+        `@${tags["display-name"]}, Количество участников: ${Object.keys(randomizerList).length}`
       );
     }
 
