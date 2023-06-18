@@ -29,13 +29,6 @@ const connection = (channel) => {
 
   client.connect();
 
-  /////////////////////////////////////
-  // Периодические события
-  // client.on("connected", () => {
-  //   setInterval(() => send("@chieeeeefkeef, Где бабки?"), 1800000);
-  // });
-  /////////////////////////////////////
-
   let previousWinner = "";
   let randomizerList = {};
   const ignoreUsers = ["chieeeeefkeef"];
@@ -53,7 +46,7 @@ const connection = (channel) => {
     if (
       messageFixed === "!игра" &&
       !randomizerList[tags["display-name"]] &&
-      tags["display-name"] !== previousWinner
+      tags["display-name"] !== previousWinner && !ignoreUsers.includes(tags["display-name"])
     ) {
       randomizerList[tags["display-name"]] = {
         subscriber: tags["subscriber"],
