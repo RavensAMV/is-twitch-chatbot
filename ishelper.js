@@ -31,7 +31,7 @@ const connection = (channel) => {
 
   let previousWinner = "";
   let randomizerList = {};
-  const ignoreUsers = ["chieeeeefkeef"];
+  const ignoreUsers = process.env.ban.split(', ');
 
   client.on("message", (channel, tags, message) => {
     const messageFixed = message.trim().toLowerCase();

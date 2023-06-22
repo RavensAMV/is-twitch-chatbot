@@ -1,7 +1,7 @@
 const chooseRandom = (
   users,
-  boostedChanceIS = 0.1,
-  boostedChanceSubs = 0.2
+  boostedChanceIS = 0.15,
+  boostedChanceSubs = 0.3
 ) => {
   const chooseIndex = (array) =>
     Math.floor(Math.random() * array.length);
