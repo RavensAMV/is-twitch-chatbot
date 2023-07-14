@@ -57,7 +57,7 @@ const connection = (channel) => {
     if (
       messageFixed === "!старт" &&
       (tags["username"] === channel.replace("#", "") ||
-        tags["username"] === "geniusooo")
+        tags["username"] === "is_ravensamv")
     ) {
       randomizerList = {};
       send(
@@ -69,7 +69,7 @@ const connection = (channel) => {
     if (
       messageFixed === "!результат" &&
       (tags["username"] === channel.replace("#", "") ||
-        tags["username"] === "geniusooo")
+        tags["username"] === "is_ravensamv")
     ) {
       if (Object.keys(randomizerList).length > 0) {
         let lucky = chooseRandom(randomizerList);
@@ -96,7 +96,7 @@ const connection = (channel) => {
     if (
       messageFixed.toLowerCase() === "!участники" &&
       (tags["username"] === channel.replace("#", "") ||
-        tags["username"] === "geniusooo")
+        tags["username"] === "is_ravensamv")
     ) {
       send(
         `@${tags["display-name"]}, Количество участников: ${Object.keys(randomizerList).length}`
